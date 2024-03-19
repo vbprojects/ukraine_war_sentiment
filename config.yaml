@@ -1,0 +1,7 @@
+data_path : ./data
+redownload : False
+cleaned_data_path : ./cleaned_data
+news_mhtml_path : ./wapo.mhtml
+news_csv_path : ./wapo.csv
+sampling_rate : 0.5
+timedelta: 3
