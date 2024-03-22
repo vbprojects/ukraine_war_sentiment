@@ -1,6 +1,6 @@
 # Ukraine War Twitter Discourse Project
 
-This repo is about exploring how Events happening during the Ukraine War effected Discourse on Twitter. We aim to create a reproducable justifiable method of analysis with professional presentation. We model count data of relevant tweets to a particular article wih a peicewise exponential then interpret and compare latent variables of events based off topic.
+This repo is about exploring how Events happening during the Ukraine War effected Discourse on Twitter. We aim to create a reproducable justifiable method of analysis with professional presentation. We model count data of relevant tweets to a particular article wih a peicewise exponential decay model, then interpret and compare latent variables of events based off topic.
 
 
 ## Outline and Deliverables
