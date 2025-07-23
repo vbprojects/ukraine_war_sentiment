@@ -1,2 +1,5 @@
 /data/
 /cleaned_data/
+/scaled_article_bins/
+/.venv
+/__pycache__/
