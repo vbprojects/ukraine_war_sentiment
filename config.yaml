@@ -5,3 +5,6 @@ news_mhtml_path : ./wapo.mhtml
 news_csv_path : ./wapo.csv
 sampling_rate : 0.5
 timedelta: 3
+scaled_article_bins_path: ./scaled_article_bins
+model_summaries : ./model_summaries
+model_predictions : ./model_predictions

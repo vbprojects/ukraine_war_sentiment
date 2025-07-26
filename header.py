@@ -11,8 +11,6 @@ import dask
 dask.config.set({'dataframe.query-planning': True})
 import dask.dataframe as dd
 
-import dask_ml
-
 config = yaml.safe_load(open("config.yaml"))
 data_path_str = config["data_path"]
 cleaned_data_path_str = config["cleaned_data_path"]
@@ -21,6 +19,9 @@ news_mhtml_path_str = config["news_mhtml_path"]
 sampling_rate = config["sampling_rate"]
 news_csv_path_str = config["news_csv_path"]
 timedelta = config["timedelta"]
+scaled_article_bins_path_str = config["scaled_article_bins_path"]
 
 cleaned_data_path = Path(cleaned_data_path_str)
 cleaned_data_path.mkdir(parents=True, exist_ok=True)
+scaled_article_bins_path = Path(scaled_article_bins_path_str)
+scaled_article_bins_path.mkdir(parents=True, exist_ok=True)
