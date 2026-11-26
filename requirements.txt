@@ -1,0 +1,10 @@
+pandas==2.2.3
+numpy==2.3.5
+scipy==1.17.0
+scikit-learn==1.8.0
+matplotlib==3.10.8
+pyarrow==26.0.1
+dask==2026.11.0
+distributed==2026.11.0
+beautifulsoup4==4.15.0
+tabulate==0.10.0
