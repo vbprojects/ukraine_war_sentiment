@@ -3,13 +3,35 @@
 This repo is about exploring how Events happening during the Ukraine War effected Discourse on Twitter. We aim to create a reproducable justifiable method of analysis with professional presentation. We model count data of relevant tweets to a particular article wih a peicewise exponential decay model, then interpret and compare latent variables of events based off topic.
 
 
+## Reproduce the analysis
+
+[Read the results and view the fitted curves](results/README.md).
+
+Run from the repository root with Python 3.12. The first preparation command recreates the committed article table. The second downloads release 5 of the original Kaggle corpus and builds Parquet partitions from its 297 deduplicated tweet files. Sampling by a hash of text and timestamp retains a deterministic 10%. The three overlapping supplemental CSV exports are excluded.
+
+```sh
+python -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements.txt
+python prepare.py articles
+python prepare.py tweets
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python analyze.py
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python report.py
+```
+
+The default run starts three Dask worker processes on one machine. To use an existing Dask cluster, pass its address with `python analyze.py --scheduler ADDRESS` and make this checkout and its prepared data available at the same paths on every worker. The notebooks call the same Python entry points.
+
+The batch fit uses constrained least squares for the original piecewise mean. It searches hourly onsets with at least six hours on either side and 16 log-spaced half-lives from 0.5 to 72 hours. Both baselines and the burst amplitude are nonnegative, and the post-event baseline is constrained to equal or exceed the pre-event baseline. These point estimates replace the exploratory NumPyro notebook fits. The original modeling rationale is recorded below.
+
+Each article uses a seven-day UTC window centered on its publication calendar day after conversion from US Eastern time. A window must have sampled tweets in every hour. Within a window, TF-IDF is trained on its tweets and the article archive. A tweet counts if its cosine similarity exceeds the window's 95th percentile for that article. Each hourly count is multiplied by mean traffic across hours of day divided by traffic for that hour of day. The report summarizes fits with positive burst amplitude and in-sample R² of at least 0.25. Results include the excluded articles and the reason for exclusion.
+
 ## Outline and Deliverables
 
 (* indicates a section in choices discussing what and why descisions were made)
 
 Data Loading Steps
  
- - [x] Download Data Convert to feather (download_data.ipynb)
+ - [x] Download data and convert to Parquet (prepare.py tweets)
  - [x] Convert Washington Post mhtml file to tabular data set (process_newmhtml.ipynb)
  
 First Output Steps
@@ -19,21 +41,21 @@ First Output Steps
 - [x] Filter dataframe by tweets relevant to each article groupby date and hour (*Relevance Determination Justifications)
 - [x] Correct oscilatting patterns in data samples (*Data Correction Justifications) 
 - [x] Fit model, filter models by goodness of fit (*Model Details)
-- [ ] Report latent fits and create visuals
+- [x] Report latent fits and create visuals
 
 Cleaning Up
 
-- [ ] Move model definition to its own file
-- [ ] Remove %run macros
-- [ ] Convert notebooks to Scripts
-- [ ] Ensure reproducable pipeline for obtaining results
-- [ ]  Run output steps on all articles on cluster
+- [x] Move model definition to its own file
+- [x] Remove %run macros
+- [x] Convert notebooks to Scripts
+- [x] Ensure reproducable pipeline for obtaining results
+- [x]  Run output steps on all articles on cluster
 
 Final Report
 
-- [ ] Give clear interpretations of model latent variables
-- [ ] Show visual example of model fits
-- [ ] Cluster articles by topic and show relations to latent variables
+- [x] Give clear interpretations of model latent variables
+- [x] Show visual example of model fits
+- [x] Cluster articles by topic and show relations to latent variables
 
 
 
